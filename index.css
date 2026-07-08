@@ -1,0 +1,253 @@
+/* style.css – Design futuriste, glassmorphism, animations premium */
+
+/* ----- Reset & base ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 30%, #1b2a3a, #0e1620);
+  font-family: 'Inter', sans-serif;
+  padding: 1.5rem;
+  /* animation d’apparition du fond (subtile) */
+  animation: fadeBg 1s ease-out;
+}
+
+@keyframes fadeBg {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ----- Conteneur principal ----- */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  /* animation flottante (floating) sur toute la calculatrice */
+  animation: floatGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatGlow {
+  0% { transform: translateY(0px); filter: drop-shadow(0 10px 30px rgba(0, 180, 255, 0.2)); }
+  100% { transform: translateY(-10px); filter: drop-shadow(0 20px 40px rgba(0, 180, 255, 0.5)); }
+}
+
+/* ----- Effet glassmorphism + glow ----- */
+.calculator {
+  width: 100%;
+  padding: 1.8rem 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-radius: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  transition: box-shadow 0.3s ease;
+  /* animation d’apparition fluide */
+  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ----- Écran (display) ----- */
+.display {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 32px;
+  padding: 1.2rem 1.8rem;
+  margin-bottom: 2rem;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 8px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.expression {
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.3px;
+  min-height: 1.6rem;
+  word-break: break-all;
+  text-align: right;
+  width: 100%;
+  transition: color 0.2s;
+}
+
+.result {
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.2;
+  transition: all 0.15s ease;
+  text-shadow: 0 0 12px rgba(0, 180, 255, 0.2);
+  width: 100%;
+  text-align: right;
+  /* animation lors du changement de résultat (via JS) */
+}
+
+.result.updated {
+  animation: resultPop 0.25s ease;
+}
+
+@keyframes resultPop {
+  0% { transform: scale(0.92); opacity: 0.6; }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ----- Grille des boutons ----- */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.9rem;
+}
+
+/* ----- Boutons génériques ----- */
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+  padding: 0.9rem 0.2rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(4px);
+  color: #f0f4ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transform: scale(1);
+  will-change: transform, box-shadow, background;
+}
+
+/* Effet hover élégant */
+.btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: scale(1.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+/* Effet d’enfoncement au clic (via JS + classe active) */
+.btn:active {
+  transform: scale(0.92) !important;
+  transition-duration: 0.05s;
+}
+
+/* ---- Boutons numériques ---- */
+.btn.number {
+  background: rgba(255, 255, 255, 0.07);
+  color: #eef5ff;
+}
+.btn.number:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* ---- Boutons opérateurs ---- */
+.btn.operator {
+  background: rgba(0, 180, 255, 0.08);
+  color: #80d4ff;
+  font-weight: 600;
+}
+.btn.operator:hover {
+  background: rgba(0, 180, 255, 0.18);
+  color: #b0e4ff;
+  box-shadow: 0 0 20px rgba(0, 180, 255, 0.15);
+}
+
+/* ---- Bouton égal (accent) ---- */
+.btn.equals {
+  background: linear-gradient(135deg, #0077ff, #0055cc);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 100, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn.equals:hover {
+  background: linear-gradient(135deg, #1a88ff, #0066dd);
+  transform: scale(1.04);
+  box-shadow: 0 8px 30px rgba(0, 100, 255, 0.5);
+}
+
+/* bouton zéro occupe 2 colonnes */
+.zero {
+  grid-column: span 2;
+}
+
+/* ----- Ripple effect (via JS) ----- */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  animation: rippleAnim 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 480px) {
+  .calculator {
+    padding: 1.2rem 1rem 1.5rem;
+    border-radius: 36px;
+  }
+  .display {
+    padding: 0.8rem 1.2rem;
+    min-height: 80px;
+  }
+  .result {
+    font-size: 2.5rem;
+  }
+  .expression {
+    font-size: 0.85rem;
+  }
+  .btn {
+    font-size: 1.2rem;
+    padding: 0.7rem 0.2rem;
+    border-radius: 16px;
+  }
+  .buttons {
+    gap: 0.6rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .btn {
+    font-size: 1rem;
+    padding: 0.6rem 0;
+    border-radius: 14px;
+  }
+  .result {
+    font-size: 2rem;
+  }
+  .buttons {
+    gap: 0.45rem;
+  }
+}
+
+/* ----- Accessibilité : focus visible ----- */
+.btn:focus-visible {
+  outline: 2px solid #80d4ff;
+  outline-offset: 2px;
+}
